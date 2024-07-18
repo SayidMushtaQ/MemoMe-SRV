@@ -1,0 +1,36 @@
+# Ignore artifacts:
+build
+coverage
+dist
+node_modules
+
+# Ignore all HTML files:
+*.html
+
+# Ignore specific directories:
+public/
+logs/
+
+# Ignore specific files:
+.env
+*.min.js
+
+# Ignore files in specific subdirectories:
+src/**/*.test.js
+src/**/*.spec.js
+
+# Ignore all files in a directory except a specific file:
+!src/keep_this_file.js
+
+# Ignore Prettier configuration file:
+.prettierrc
+.prettierignore
+
+# Ignore lock files:
+package-lock.json
+yarn.lock
+
+# Ignore temporary files:
+*.tmp
+*.log
+.DS_Store

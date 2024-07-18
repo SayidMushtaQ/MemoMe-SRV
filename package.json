@@ -1,0 +1,36 @@
+{
+  "name": "memome-srv",
+  "version": "1.0.0",
+  "description": "MemoMe is a sleek and intuitive notes maker app built on Node.js, designed to help you capture, organize, and access your thoughts and ideas effortlessly. ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "dotenvx run -- nodemon src/index --ext js,json",
+    "lint": "eslint . src/**/*.js",
+    "lint:fix": "eslint . src/**/*.js --fix",
+    "format": "prettier --write \"src/**/*.js\""
+  },
+  "keywords": [
+    "NotesTaker",
+    "Notes",
+    "Memory",
+    "NodeJS",
+    "MemoMe"
+  ],
+  "author": "Mustak",
+  "license": "ISC",
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.6.4",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "eslint": "^9.7.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.8.0",
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3"
+  }
+}
