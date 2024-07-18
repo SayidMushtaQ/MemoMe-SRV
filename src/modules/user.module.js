@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { EMAIL_REGEX } from "../constants.js";
+import bcryptjs from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
@@ -28,5 +29,15 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified(this.password)) return next();
+  this.password = await bcryptjs.hash(this.password);
+  next();
+});
+
+userSchema.methods.isPasswordCorrect = async function (password) {
+  return await bcryptjs.compare(password, this.password);
+};
 
 export const User = mongoose.model("User", userSchema);

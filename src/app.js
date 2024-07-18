@@ -1,5 +1,5 @@
 import express from "express";
-import { DATA_LIMIT } from "./constants.js";
+import { DATA_LIMIT, API_URL } from "./constants.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -16,5 +16,9 @@ app.use(express.json({ limit: DATA_LIMIT }));
 app.use(express.urlencoded({ extended: true, limit: DATA_LIMIT }));
 app.use(express.static("public"));
 app.use(cookieParser(process.env.COOKIE_PARSER_SECRET));
+
+import userRouter from "./routes/user.routes.js";
+
+app.use(`${API_URL}/auth`, userRouter);
 
 export { app };
