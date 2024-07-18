@@ -6,17 +6,6 @@ import { Note } from "../../modules/notes.module.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 
 export const createNote = asynHandler(async (req, res) => {
-  /**
-   * Notes
-   */
-  /**
-   * 1) Get data
-   * 2) Validate data
-   * 3) Verify data
-   * 4) Verify user
-   * 5) Create data
-   * 6) Response
-   */
   const { title, description, userID } = req.body;
   if ([title, description, userID].some(val => val === "")) {
     throw new ApiError(400, "All fields are required", [
