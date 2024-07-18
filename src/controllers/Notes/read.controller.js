@@ -8,7 +8,7 @@ export const readTodo = asynHandler(async (req, res) => {
 
   if (!userId) {
     //For safety
-    throw new ApiError(400, "User ID is required", ["Something went wrong ..!!"]);
+    throw new ApiError(404, "User NOT Found!!", ["Something went wrong ..!!"]);
   }
   const notes = await Note.find({ createdBy: userId });
 
