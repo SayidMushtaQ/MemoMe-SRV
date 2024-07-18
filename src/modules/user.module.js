@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { EMAIL_REGEX } from "../constants.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -12,11 +13,13 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
+      match: [EMAIL_REGEX, "Please enter a valid email address"]
     },
     password: {
       type: String,
-      required: true
+      required: true,
+      minlength: [6, "At least set 6 character password"]
     },
     isVerified: {
       type: Boolean,

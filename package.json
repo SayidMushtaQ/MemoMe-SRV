@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MemoMe is a sleek and intuitive notes maker app built on Node.js, designed to help you capture, organize, and access your thoughts and ideas effortlessly. ",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node src/index.js",
     "dev": "dotenvx run -- nodemon src/index --ext js,json",
@@ -21,6 +22,8 @@
   "license": "ISC",
   "dependencies": {
     "@dotenvx/dotenvx": "^1.6.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "mongoose": "^8.5.1"
   },
