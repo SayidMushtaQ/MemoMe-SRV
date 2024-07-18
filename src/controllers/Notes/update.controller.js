@@ -26,7 +26,7 @@ export const updateNote = asynHandler(async (req, res) => {
     return res.status(200).json(
       new ApiResponse(200, note, {
         message: "Note updated successfully",
-        todoId: note._id
+        noteID: note._id
       })
     );
   }
@@ -38,7 +38,7 @@ export const updateNote = asynHandler(async (req, res) => {
   return res.status(200).json(
     new ApiResponse(200, updatedNote, {
       message: "Note updated successfully",
-      todoId: updatedNote._id
+      noteID: updatedNote._id
     })
   );
 });

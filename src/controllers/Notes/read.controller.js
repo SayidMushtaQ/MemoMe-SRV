@@ -3,7 +3,7 @@ import { asynHandler } from "../../util/asynHandler.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 import { ApiError } from "../../util/apiError.js";
 
-export const readTodo = asynHandler(async (req, res) => {
+export const readNote = asynHandler(async (req, res) => {
   const { userId } = req.body; //TODO: Change According token
 
   if (!userId) {
