@@ -27,7 +27,8 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.5.1"
+    "mongoose": "^8.5.1",
+    "resend": "^3.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
