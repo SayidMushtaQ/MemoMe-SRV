@@ -4,4 +4,13 @@ const CONTENT_FILTER_REGEX =
 const DB_NAME = "MemoMe";
 const DATA_LIMIT = "16kb";
 const API_URL = "/api/v1";
-export { EMAIL_REGEX, CONTENT_FILTER_REGEX, DB_NAME, DATA_LIMIT, API_URL };
+const excludedAuthPaths = ["/api/v1/auth/login", "/api/v1/auth/register"];
+
+export {
+  EMAIL_REGEX,
+  CONTENT_FILTER_REGEX,
+  DB_NAME,
+  DATA_LIMIT,
+  API_URL,
+  excludedAuthPaths
+};

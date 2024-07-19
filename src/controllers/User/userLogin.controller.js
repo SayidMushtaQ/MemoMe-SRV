@@ -8,6 +8,7 @@ import { AuthToken } from "../../util/authTokenHandler.js";
 export const userLogin = asynHandler(async (req, res) => {
   const { userIdentifier, password } = req.body;
   const userToken = new AuthToken();
+
   if ([userIdentifier, password].some(val => val === "")) {
     throw new ApiError(400, "Email or userName ans password is required", [
       "Please fill up all necessary fields"

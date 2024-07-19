@@ -1,9 +1,11 @@
 import { asynHandler } from "../util/asynHandler.js";
 import { AuthToken } from "../util/authTokenHandler.js";
 import { ApiError } from "../util/apiError.js";
+import { excludedAuthPaths } from "../constants.js";
 
 export const requreAuthentication = asynHandler(async (req, res, next) => {
   const userToken = new AuthToken();
+  if (excludedAuthPaths.includes(req.path)) return next();
   const token = req.cookies?.authToken;
   req.user = null;
   if (!token)
