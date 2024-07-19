@@ -25,7 +25,9 @@ const userSchema = new mongoose.Schema(
     isVerified: {
       type: Boolean,
       default: false
-    }
+    },
+    verifyCode: String,
+    verifyCodeExpiry: Date
   },
   { timestamps: true }
 );

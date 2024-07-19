@@ -1,4 +1,4 @@
-import { resend } from "../config/resend.config.js";
+import { transporter } from "../config/nodemailer.config.js";
 
 export const sendEmailVerification = async (email, userName, otp) => {
   try {
@@ -10,8 +10,8 @@ export const sendEmailVerification = async (email, userName, otp) => {
           <p style="font-size: 14px; color: #777;">This OTP is valid for the next 10 minutes.</p>
         </div>
       `;
-    await resend.emails.send({
-      from: "Acme <onboarding@resend.dev>",
+    await transporter.sendMail({
+      from: `${process.env.EMAIL_USERNAME}`,
       to: email,
       subject: "OTP Verification",
       html: htmlContent
@@ -22,6 +22,3 @@ export const sendEmailVerification = async (email, userName, otp) => {
     return { success: false, message: "Failed to send verification email." };
   }
 };
-
-// const verifyToken = Math.floor(10000 + Math.random() * 90000)
-// console.log(verifyToken)
