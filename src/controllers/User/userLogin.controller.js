@@ -39,7 +39,13 @@ export const userLogin = asynHandler(async (req, res) => {
   const token = userToken.setUser(userInfo);
   return res
     .status(200)
-    .cookie("authToken", token)
+    .cookie("authToken", token, {
+      //TODO: Production Options
+      // secure: true,
+      // httpOnly: true,
+      // sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    })
     .json(
       new ApiResponse(200, { ...userInfo, redirectURI: "/user" }, "Login successful")
     );
