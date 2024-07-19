@@ -4,8 +4,7 @@ import { ApiResponse } from "../../util/apiResponse.js";
 import { ApiError } from "../../util/apiError.js";
 
 export const readNote = asynHandler(async (req, res) => {
-  const { userId } = req.body; //TODO: Change According token
-
+  const { id: userId } = req.user;
   if (!userId) {
     //For safety
     throw new ApiError(404, "User NOT Found!!", ["Something went wrong ..!!"]);

@@ -6,7 +6,8 @@ import { Note } from "../../modules/notes.module.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 
 export const createNote = asynHandler(async (req, res) => {
-  const { title, description, userID } = req.body;
+  const { title, description } = req.body;
+  const { id: userID } = req.user;
   if ([title, description, userID].some(val => val === "")) {
     throw new ApiError(400, "All fields are required", [
       "Please fill up all necessary fields"
