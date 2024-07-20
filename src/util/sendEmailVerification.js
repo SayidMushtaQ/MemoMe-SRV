@@ -11,7 +11,7 @@ export const sendEmailVerification = async (email, userName, otp) => {
         </div>
       `;
     await transporter.sendMail({
-      from: `${process.env.EMAIL_USERNAME}`,
+      from: `'"MemoMe 🦄" <${process.env.EMAIL_USERNAME}>'`,
       to: email,
       subject: "OTP Verification",
       html: htmlContent

@@ -1,25 +1,43 @@
 import { asynHandler } from "../../util/asynHandler.js";
 import { ApiError } from "../../util/apiError.js";
+import { ApiResponse } from "../../util/apiResponse.js";
 import { sendEmailVerification } from "../../util/sendEmailVerification.js";
+import { User } from "../../modules/user.module.js";
 export const sentVerifyCode = asynHandler(async (req, res) => {
-  /**
-   * [+] User Verify
-   * 1) Get user Data from Browser
-   * 2) Generate OTP
-   * 3) Validate the user
-   * 4) Send OTP to email
-   * 5) Store the OTP to the User and Exp
-   */
-  const localUser = req.user;
-  if (!localUser)
-    throw new ApiError(401, "Access denied. Please log in to continue.", [
-      "Unauthorized"
-    ]);
-  const verifyOTP = Math.floor(10000 + Math.random() * 90000).toString();
-  if (!verifyOTP) {
+  const { email, userName } = req.body;
+  if ([email, userName].some(val => val === ""))
+    throw new ApiError(
+      400,
+      "Invalid request. Please check the provided email address and try again."
+    );
+  const OTP = Math.floor(10000 + Math.random() * 90000).toString();
+  if (!OTP) {
     throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);
   }
-  const isEmailSent = await sendEmailVerification("", verifyOTP);
-  console.log(isEmailSent);
-  res.send("ok");
+  const sentEmail = await sendEmailVerification(email, userName, OTP);
+  console.log(sentEmail);
+  console.log(email);
+  if (!sentEmail.success) {
+    throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);
+  }
+  const expire = new Date();
+  expire.setMinutes(expire.getMinutes() + 10);
+
+  const userID = await User.findOneAndUpdate(
+    { email },
+    {
+      verifyCode: OTP,
+      verifyCodeExpiry: expire
+    }
+  ).select("id");
+  console.log(userID);
+  if (!userID) {
+    throw new ApiError(
+      500,
+      "An error occurred while sending the OTP. Please try again later."
+    );
+  }
+  return res
+    .status(201)
+    .json(new ApiResponse(200, userID, "OTP has been sent to your email."));
 });
