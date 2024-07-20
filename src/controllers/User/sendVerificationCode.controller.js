@@ -18,9 +18,8 @@ export const sentVerifyCode = asynHandler(async (req, res) => {
   if (!sentEmail.success) {
     throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);
   }
-  const currentTime = new Date();
-  const expireTime = new Date(currentTime.getTime() + 5 * 60 * 1000); //Add 5 minutes (2 * 60 * 1000 milliseconds)
-
+  const expireTime = new Date();
+  expireTime.setMinutes(expireTime.getMinutes() + 5); //Add 5 minutes
   const userID = await User.findOneAndUpdate(
     { email },
     {
@@ -28,7 +27,6 @@ export const sentVerifyCode = asynHandler(async (req, res) => {
       verifyCodeExpiry: expireTime
     }
   ).select("id");
-  console.log(userID);
   if (!userID) {
     throw new ApiError(
       500,
