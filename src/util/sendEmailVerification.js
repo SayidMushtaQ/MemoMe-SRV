@@ -7,7 +7,7 @@ export const sendEmailVerification = async (email, userName, otp) => {
           <h2 style="color: #4CAF50;">Dear user: ${userName} Your OTP Verification Code</h2>
           <p style="font-size: 18px;">Use the following OTP to complete your verification:</p>
           <p style="font-size: 24px; font-weight: bold; color: #333;">${otp}</p>
-          <p style="font-size: 14px; color: #777;">This OTP is valid for the next 10 minutes.</p>
+          <p style="font-size: 14px; color: #777;">This OTP is valid for the next 5 minutes.</p>
         </div>
       `;
     await transporter.sendMail({
