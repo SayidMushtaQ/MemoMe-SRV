@@ -3,13 +3,6 @@ import { asynHandler } from "../../util/asynHandler.js";
 import { ApiError } from "../../util/apiError.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 export const verifyOTP = asynHandler(async (req, res) => {
-  /**
-   * Verify
-   * 1) Get Otp and email and validate
-   * 2) Email validate
-   * 3) Check OTP expire;
-   * 4) Send res
-   */
   const { email, otp } = req.body;
 
   if ([email, otp].some(val => val === "")) {
