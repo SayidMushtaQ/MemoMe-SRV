@@ -6,14 +6,6 @@ import { userIdentifierHandler } from "../../util/userIdentifierHandler.js";
 import { sendEmailVerification } from "../../util/sendEmailVerification.js";
 
 export const forgotPassword = asynHandler(async (req, res) => {
-  /**
-   * Forgot password
-   * 1) Get email
-   * 2) Validate email
-   * 3) Verify is verify or not
-   * 4) Send verify OTP email
-   * 5) Send Res
-   */
   const { userIdentifier } = req.body;
   if (!userIdentifier) {
     throw new ApiError(400, "Email or userName is required", [
