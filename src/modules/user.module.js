@@ -8,13 +8,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
-      index: true
+      lowercase: true
     },
     email: {
       type: String,
       required: true,
       unique: true,
+      index: true,
       match: [EMAIL_REGEX, "Please enter a valid email address"]
     },
     password: {

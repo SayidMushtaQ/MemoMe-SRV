@@ -15,7 +15,7 @@ export const forgotPassword = asynHandler(async (req, res) => {
   const { email, userName } = userIdentifierHandler(userIdentifier);
   const user = await User.findOne({
     $or: [{ userName }, { email }]
-  }).select("id isVerified");
+  }).select("-password");
   if (!user) {
     throw new ApiError(404, "User does not exist", ["Not Found"]);
   }
@@ -23,7 +23,7 @@ export const forgotPassword = asynHandler(async (req, res) => {
     throw new ApiError(403, "User not verified");
   }
   const { OTP } = await user.generateOTP();
-  const sentEmail = await sendEmailVerification(email, userName, OTP);
+  const sentEmail = await sendEmailVerification(user.email, user.userName, OTP);
   if (!sentEmail.success) {
     throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);
   }

@@ -2,22 +2,26 @@ import { asynHandler } from "../../util/asynHandler.js";
 import { ApiError } from "../../util/apiError.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 import { sendEmailVerification } from "../../util/sendEmailVerification.js";
+import { userIdentifierHandler } from "../../util/userIdentifierHandler.js";
 import { User } from "../../modules/user.module.js";
 export const userVerificaiton = asynHandler(async (req, res) => {
-  const { email, userName } = req.body;
-  if ([email, userName].some(val => val === ""))
-    throw new ApiError(
-      400,
-      "Invalid request. Please check the provided email address and try again."
-    );
-  const user = await User.findOne({ email });
+  const { userIdentifier } = req.body;
+  if (!userIdentifier) {
+    throw new ApiError(400, "Email or userName is required", [
+      "Please fill up all necessary fields"
+    ]);
+  }
+  const { email, userName } = userIdentifierHandler(userIdentifier);
+  const user = await User.findOne({
+    $or: [{ userName }, { email }]
+  }).select("-password");
   if (!user) {
     throw new ApiError(404, "User does not exist", ["Not Found"]);
   }
 
   const { OTP } = await user.generateOTP();
 
-  const sentEmail = await sendEmailVerification(email, userName, OTP);
+  const sentEmail = await sendEmailVerification(user.email, user.userName, OTP);
   if (!sentEmail.success) {
     throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);
   }
