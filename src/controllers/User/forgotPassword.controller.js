@@ -15,7 +15,6 @@ export const forgotPassword = asynHandler(async (req, res) => {
    * 5) Send Res
    */
   const { userIdentifier } = req.body;
-  console.log(userIdentifier);
   if (!userIdentifier) {
     throw new ApiError(400, "Email or userName is required", [
       "Please fill up all necessary fields"
