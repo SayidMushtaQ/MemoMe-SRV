@@ -2,9 +2,7 @@ import { ApiError } from "../../util/apiError.js";
 import { User } from "../../modules/user.module.js";
 import { asynHandler } from "../../util/asynHandler.js";
 import { ApiResponse } from "../../util/apiResponse.js";
-import { userIdentifierHandler } from "../../util/userIdentifierHandler.js";
 import { sendEmailVerification } from "../../util/sendEmailVerification.js";
-
 export const forgotPassword = asynHandler(async (req, res) => {
   const { userIdentifier } = req.body;
   if (!userIdentifier) {
@@ -12,10 +10,8 @@ export const forgotPassword = asynHandler(async (req, res) => {
       "Please fill up all necessary fields"
     ]);
   }
-  const { email, userName } = userIdentifierHandler(userIdentifier);
-  const user = await User.findOne({
-    $or: [{ userName }, { email }]
-  }).select("-password");
+  const { user } = await User.findUserByEmailOrUserName(userIdentifier);
+
   if (!user) {
     throw new ApiError(404, "User does not exist", ["Not Found"]);
   }
@@ -34,7 +30,7 @@ export const forgotPassword = asynHandler(async (req, res) => {
       new ApiResponse(
         200,
         { message: sentEmail.message },
-        "OTP has been sent to your email."
+        "Fortgot password OTP has been sent to your email."
       )
     );
 });

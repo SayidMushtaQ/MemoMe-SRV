@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { EMAIL_REGEX } from "../constants.js";
 import bcryptjs from "bcryptjs";
+import { userIdentifierHandler } from "../util/userIdentifierHandler.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -50,6 +51,13 @@ userSchema.methods.generateOTP = async function () {
   this.verifyCodeExpiry = expireTime;
   this.save();
   return { OTP };
+};
+userSchema.statics.findUserByEmailOrUserName = async function (userIdentifier) {
+  const { email, userName } = userIdentifierHandler(userIdentifier);
+  const user = await this.findOne({
+    $or: [{ userName }, { email }]
+  }).select("-password");
+  return { user };
 };
 
 export const User = mongoose.model("User", userSchema);

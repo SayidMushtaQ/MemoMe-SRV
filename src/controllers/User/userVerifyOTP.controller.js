@@ -3,7 +3,6 @@ import { asynHandler } from "../../util/asynHandler.js";
 import { ApiError } from "../../util/apiError.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 import { verifyOTP } from "../../util/verifyOTP.js";
-import { userIdentifierHandler } from "../../util/userIdentifierHandler.js";
 export const userVerifyOTP = asynHandler(async (req, res) => {
   const { userIdentifier, otp } = req.body;
   if ([userIdentifier, otp].some(val => val === "")) {
@@ -11,10 +10,7 @@ export const userVerifyOTP = asynHandler(async (req, res) => {
       "Please fill up all necessary fields"
     ]);
   }
-  const { email, userName } = userIdentifierHandler(userIdentifier);
-  const user = await User.findOne({
-    $or: [{ userName }, { email }]
-  }).select("-password");
+  const { user } = await User.findUserByEmailOrUserName(userIdentifier);
   if (!user) {
     throw new ApiError(404, "User does not exist", ["Not Found"]);
   }
@@ -40,5 +36,5 @@ export const userVerifyOTP = asynHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, { id: user.id }, "OTP Verified successfully"));
+    .json(new ApiResponse(200, { id: user.id }, "User Verified successfully"));
 });

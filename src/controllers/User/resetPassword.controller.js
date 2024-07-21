@@ -3,7 +3,6 @@ import { ApiError } from "../../util/apiError.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 import { User } from "../../modules/user.module.js";
 import { verifyOTP } from "../../util/verifyOTP.js";
-import { userIdentifierHandler } from "../../util/userIdentifierHandler.js";
 export const resetPassword = asynHandler(async (req, res) => {
   /**
    * Reset Password
@@ -25,10 +24,7 @@ export const resetPassword = asynHandler(async (req, res) => {
   if (newPassword.length < 6) {
     throw new ApiError(400, "At least set a 6 character password");
   }
-  const { email, userName } = userIdentifierHandler(userIdentifier);
-  const user = await User.findOne({
-    $or: [{ userName }, { email }]
-  }).select("id isVerified verifyCode verifyCodeExpiry password");
+  const { user } = await User.findUserByEmailOrUserName(userIdentifier);
   if (!user) {
     throw new ApiError(404, "User does not exist", ["Not Found"]);
   }
@@ -49,5 +45,5 @@ export const resetPassword = asynHandler(async (req, res) => {
   user.save();
   return res
     .status(200)
-    .json(new ApiResponse(200, { id: user.id }, "OTP Verified successfully"));
+    .json(new ApiResponse(200, { id: user.id }, "User password reset successfully"));
 });

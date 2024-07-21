@@ -2,7 +2,6 @@ import { asynHandler } from "../../util/asynHandler.js";
 import { ApiError } from "../../util/apiError.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 import { sendEmailVerification } from "../../util/sendEmailVerification.js";
-import { userIdentifierHandler } from "../../util/userIdentifierHandler.js";
 import { User } from "../../modules/user.module.js";
 export const userVerificaiton = asynHandler(async (req, res) => {
   const { userIdentifier } = req.body;
@@ -11,10 +10,7 @@ export const userVerificaiton = asynHandler(async (req, res) => {
       "Please fill up all necessary fields"
     ]);
   }
-  const { email, userName } = userIdentifierHandler(userIdentifier);
-  const user = await User.findOne({
-    $or: [{ userName }, { email }]
-  }).select("-password");
+  const { user } = await User.findUserByEmailOrUserName(userIdentifier);
   if (!user) {
     throw new ApiError(404, "User does not exist", ["Not Found"]);
   }
