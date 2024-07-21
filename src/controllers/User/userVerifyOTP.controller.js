@@ -2,6 +2,7 @@ import { User } from "../../modules/user.module.js";
 import { asynHandler } from "../../util/asynHandler.js";
 import { ApiError } from "../../util/apiError.js";
 import { ApiResponse } from "../../util/apiResponse.js";
+import { verifyOTP } from "../../util/verifyOTP.js";
 export const userVerifyOTP = asynHandler(async (req, res) => {
   const { email, otp } = req.body;
 
@@ -19,10 +20,11 @@ export const userVerifyOTP = asynHandler(async (req, res) => {
   if (user.isVerified) {
     throw new ApiError(400, "User is already verified.");
   }
-  const currentTime = new Date();
-  const expireTime = new Date(user.verifyCodeExpiry);
-  const isCodeNotExpire = currentTime.getTime() > expireTime.getTime();
-  const isCodeValid = user.verifyCode === otp;
+  const { isCodeValid, isCodeNotExpire } = verifyOTP(
+    user.verifyCodeExpiry,
+    user.verifyCode,
+    otp
+  );
 
   if (!isCodeValid) {
     throw new ApiError(400, "The provided OTP is not valid");
