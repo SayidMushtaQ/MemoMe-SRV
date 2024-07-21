@@ -10,30 +10,20 @@ export const sentVerifyCode = asynHandler(async (req, res) => {
       400,
       "Invalid request. Please check the provided email address and try again."
     );
-  const OTP = Math.floor(10000 + Math.random() * 90000).toString();
-  if (!OTP) {
-    throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);
-  }
+  const { OTP } = await User.generateOTP(email);
+
   const sentEmail = await sendEmailVerification(email, userName, OTP);
   if (!sentEmail.success) {
     throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);
   }
-  const expireTime = new Date();
-  expireTime.setMinutes(expireTime.getMinutes() + 5); //Add 5 minutes
-  const userID = await User.findOneAndUpdate(
-    { email },
-    {
-      verifyCode: OTP,
-      verifyCodeExpiry: expireTime
-    }
-  ).select("id");
-  if (!userID) {
-    throw new ApiError(
-      500,
-      "An error occurred while sending the OTP. Please try again later."
-    );
-  }
+
   return res
     .status(201)
-    .json(new ApiResponse(200, userID, "OTP has been sent to your email."));
+    .json(
+      new ApiResponse(
+        200,
+        { message: sentEmail.message },
+        "OTP has been sent to your email."
+      )
+    );
 });

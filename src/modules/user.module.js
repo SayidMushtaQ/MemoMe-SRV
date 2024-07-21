@@ -41,5 +41,19 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcryptjs.compare(password, this.password);
 };
+userSchema.statics.generateOTP = async function (email) {
+  const OTP = Math.floor(10000 + Math.random() * 90000).toString();
+  const expireTime = new Date();
+  expireTime.setMinutes(expireTime.getMinutes() + 5); //Add 5 minutes
+  await this.findOneAndUpdate(
+    { email },
+    {
+      verifyCode: OTP,
+      verifyCodeExpiry: expireTime
+    }
+  );
+
+  return { OTP };
+};
 
 export const User = mongoose.model("User", userSchema);

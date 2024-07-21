@@ -1,25 +1,20 @@
 import { asynHandler } from "../../util/asynHandler.js";
 import { ApiError } from "../../util/apiError.js";
-import { EMAIL_REGEX } from "../../constants.js";
 import { User } from "../../modules/user.module.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 import { AuthToken } from "../../util/authTokenHandler.js";
+import { userIdentifierHandler } from "../../util/userIdentifierHandler.js";
 
 export const userLogin = asynHandler(async (req, res) => {
   const { userIdentifier, password } = req.body;
   const userToken = new AuthToken();
 
   if ([userIdentifier, password].some(val => val === "")) {
-    throw new ApiError(400, "Email or userName ans password is required", [
+    throw new ApiError(400, "Email or userName and password is required", [
       "Please fill up all necessary fields"
     ]);
   }
-  let userName, email;
-  if (EMAIL_REGEX.test(userIdentifier)) {
-    email = userIdentifier;
-  } else {
-    userName = userIdentifier;
-  }
+  const { email, userName } = userIdentifierHandler(userIdentifier);
   const user = await User.findOne({
     $or: [{ userName }, { email }]
   });

@@ -31,6 +31,7 @@ export const verifyOTP = asynHandler(async (req, res) => {
     throw new ApiError(400, "OTP has expired");
   }
   user.isVerified = true;
+  user.verifyCode = null;
   user.save();
 
   return res.status(200).json(new ApiResponse(200, user, "OTP Verified successfully"));
