@@ -2,7 +2,7 @@ import { User } from "../../modules/user.module.js";
 import { asynHandler } from "../../util/asynHandler.js";
 import { ApiError } from "../../util/apiError.js";
 import { ApiResponse } from "../../util/apiResponse.js";
-export const verifyOTP = asynHandler(async (req, res) => {
+export const userVerifyOTP = asynHandler(async (req, res) => {
   const { email, otp } = req.body;
 
   if ([email, otp].some(val => val === "")) {

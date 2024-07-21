@@ -1,7 +1,8 @@
-import { asynHandler } from "../../util/asynHandler.js";
 import { ApiError } from "../../util/apiError.js";
-import { userIdentifierHandler } from "../../util/userIdentifierHandler.js";
 import { User } from "../../modules/user.module.js";
+import { asynHandler } from "../../util/asynHandler.js";
+import { ApiResponse } from "../../util/apiResponse.js";
+import { userIdentifierHandler } from "../../util/userIdentifierHandler.js";
 import { sendEmailVerification } from "../../util/sendEmailVerification.js";
 
 export const forgotPassword = asynHandler(async (req, res) => {
@@ -30,10 +31,19 @@ export const forgotPassword = asynHandler(async (req, res) => {
   if (!user.isVerified) {
     throw new ApiError(403, "User not verified");
   }
-  // const sendEmail = sendEmailVerification()
-  // const isUserExist = await User.findOne({ email });
-  // if (isUserExist) {
-  //   throw new ApiError(409, "User already exists", ["Conflict"]);
-  // }
-  res.send("ok");
+  const { OTP } = await user.generateOTP();
+  const sentEmail = await sendEmailVerification(email, userName, OTP);
+  if (!sentEmail.success) {
+    throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);
+  }
+
+  return res
+    .status(201)
+    .json(
+      new ApiResponse(
+        200,
+        { message: sentEmail.message },
+        "OTP has been sent to your email."
+      )
+    );
 });
