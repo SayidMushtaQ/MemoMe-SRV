@@ -14,7 +14,7 @@ export const userLogin = asynHandler(async (req, res) => {
       "Please fill up all necessary fields"
     ]);
   }
-  const { email, userName } = userIdentifierHandler(userIdentifier);
+  const { email, userName } = userIdentifierHandler(userIdentifier.toLowerCase());
   const user = await User.findOne({
     $or: [{ userName }, { email }]
   });
