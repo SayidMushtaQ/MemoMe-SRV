@@ -24,7 +24,7 @@ export const resetPassword = asynHandler(async (req, res) => {
   if (newPassword.length < 6) {
     throw new ApiError(400, "At least set a 6 character password");
   }
-  const { user } = await User.findUserByEmailOrUserName(userIdentifier);
+  const { user } = await User.findUserByEmailOrUserName(userIdentifier.toLowerCase());
   if (!user) {
     throw new ApiError(404, "User does not exist", ["Not Found"]);
   }

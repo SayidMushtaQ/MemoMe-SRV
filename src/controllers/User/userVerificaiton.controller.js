@@ -10,7 +10,7 @@ export const userVerificaiton = asynHandler(async (req, res) => {
       "Please fill up all necessary fields"
     ]);
   }
-  const { user } = await User.findUserByEmailOrUserName(userIdentifier);
+  const { user } = await User.findUserByEmailOrUserName(userIdentifier.toLowerCase());
   if (!user) {
     throw new ApiError(404, "User does not exist", ["Not Found"]);
   }
