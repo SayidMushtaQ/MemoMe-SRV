@@ -10,7 +10,12 @@ export const sentVerifyCode = asynHandler(async (req, res) => {
       400,
       "Invalid request. Please check the provided email address and try again."
     );
-  const { OTP } = await User.generateOTP(email);
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new ApiError(404, "User does not exist", ["Not Found"]);
+  }
+
+  const { OTP } = await user.generateOTP();
 
   const sentEmail = await sendEmailVerification(email, userName, OTP);
   if (!sentEmail.success) {
