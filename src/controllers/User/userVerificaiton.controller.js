@@ -19,7 +19,11 @@ export const userVerificaiton = asynHandler(async (req, res) => {
 
   const sentEmail = await sendEmailVerification(user.email, user.userName, OTP);
   if (!sentEmail.success) {
-    throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);
+    throw new ApiError(
+      500,
+      "Something went wrong During Sending Email Verification...!!",
+      ["Internal Server Error"]
+    );
   }
 
   return res
