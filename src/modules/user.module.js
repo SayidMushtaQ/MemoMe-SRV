@@ -43,7 +43,7 @@ userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcryptjs.compare(password, this.password);
 };
 userSchema.methods.generateOTP = async function () {
-  const OTP = Math.floor(10000 + Math.random() * 90000).toString();
+  const OTP = Math.floor(1000 + Math.random() * 9000).toString();
   const expireTime = new Date();
   expireTime.setMinutes(expireTime.getMinutes() + 5); //Add 5 minutes
 
