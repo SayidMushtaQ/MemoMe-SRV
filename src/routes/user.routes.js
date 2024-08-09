@@ -11,7 +11,7 @@ const route = express.Router();
 
 route.route("/register").post(userRegister);
 route.route("/login").post(userLogin);
-route.route("/user").get(userProfile);
+route.route("/user").post(userProfile);
 route.route("/sentVerifyCode").post(userVerificaiton);
 route.route("/verifyEmail").post(userVerifyOTP);
 route.route("/forgotPassword").post(forgotPassword);
