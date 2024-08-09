@@ -15,7 +15,6 @@ export const requreAuthentication = asynHandler(async (req, res, next) => {
       ["Unauthorized"]
     );
   const localUser = userToken.getUser(token);
-  console.log(token)
   if (!localUser)
     throw new ApiError(401, "Access denied. Please log in to continue.", [
       "Unauthorized"
