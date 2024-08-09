@@ -3,7 +3,7 @@ import { ApiResponse } from "../../util/apiResponse.js";
 export const userProfile = asynHandler(async (req, res) => {
   const user = {
     id: req.user.id,
-    userNmae: req.user.userName,
+    userName: req.user.userName,
     email: req.user.email,
     isVerified: req.user.isVerified
   };
