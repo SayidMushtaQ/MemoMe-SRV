@@ -28,7 +28,8 @@ export const userLogin = asynHandler(async (req, res) => {
   const userInfo = {
     id: user.id,
     userName: user.userName,
-    email: user.email
+    email: user.email,
+    isVerified: user.isVerified
   };
 
   const token = userToken.setUser(userInfo);
