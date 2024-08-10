@@ -38,7 +38,7 @@ export const userLogin = asynHandler(async (req, res) => {
     .cookie("authToken", token, {
       // secure: true,
       // httpOnly: true,
-      // sameSite: "Strict",
+      sameSite: "None",
       maxAge: 7 * 24 * 60 * 60 * 1000
     })
     .json(
