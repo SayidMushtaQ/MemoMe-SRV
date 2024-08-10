@@ -6,12 +6,7 @@ import { excludedAuthPaths } from "../constants.js";
 export const requreAuthentication = asynHandler(async (req, res, next) => {
   const userToken = new AuthToken();
   if (excludedAuthPaths.includes(req.path)) return next();
-  const tokenHeader = req.headers["authorization"];
-  if (!tokenHeader) {
-    throw new ApiError(401, "Authorization header missing", ["Unauthorized"]);
-  }
-  const token = tokenHeader.split(" ")[1];
-  console.log(token);
+  const token = req.cookies?.authToken;
   req.user = null;
   if (!token)
     throw new ApiError(
