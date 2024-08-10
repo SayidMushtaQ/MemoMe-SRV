@@ -11,6 +11,7 @@ export const requreAuthentication = asynHandler(async (req, res, next) => {
     throw new ApiError(401, "Authorization header missing", ["Unauthorized"]);
   }
   const token = tokenHeader.split(" ")[1];
+  console.log(token);
   req.user = null;
   if (!token)
     throw new ApiError(
