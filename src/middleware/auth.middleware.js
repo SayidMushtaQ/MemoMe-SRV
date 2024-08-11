@@ -8,7 +8,6 @@ export const requreAuthentication = asynHandler(async (req, res, next) => {
   if (excludedAuthPaths.includes(req.path)) return next();
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  console.log(token, authHeader);
   req.user = null;
   if (!token)
     throw new ApiError(
