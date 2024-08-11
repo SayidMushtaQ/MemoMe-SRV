@@ -10,7 +10,8 @@ const excludedAuthPaths = [
   "/api/v1/auth/sentVerifyCode",
   "/api/v1/auth/verifyEmail",
   "/api/v1/auth/forgotPassword",
-  "/api/v1/auth/resetPassword"
+  "/api/v1/auth/resetPassword",
+  "/"
 ];
 
 export {
