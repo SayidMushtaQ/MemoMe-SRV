@@ -36,16 +36,12 @@ export const userLogin = asynHandler(async (req, res) => {
   return res
     .status(200)
     .cookie("authToken", token, {
-      // secure: true,
+      secure: true,
       // httpOnly: true,
       // sameSite: "Lax",
       maxAge: 7 * 24 * 60 * 60 * 1000
     })
     .json(
-      new ApiResponse(
-        200,
-        { ...userInfo, token, redirectURI: "/user" },
-        "Login successful"
-      )
+      new ApiResponse(200, { ...userInfo, redirectURI: "/user" }, "Login successful")
     );
 });
