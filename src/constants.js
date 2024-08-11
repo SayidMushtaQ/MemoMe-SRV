@@ -3,14 +3,14 @@ const CONTENT_FILTER_REGEX =
   /\b(?:fuck|shit|bitch|asshole|damn|cunt|dick|pussy|bastard|whore|slut|nigger|faggot|sex|sexual|porn|pornography|nude|nudity|cock|cum|suck|blowjob|handjob|anal|oral|rape|molest|incest)\b/i;
 const DB_NAME = "MemoMe";
 const DATA_LIMIT = "16kb";
-const API_URL = "/api/v1";
+const API_URL = "/api";
 const excludedAuthPaths = [
-  "/api/v1/auth/login",
-  "/api/v1/auth/register",
-  "/api/v1/auth/sentVerifyCode",
-  "/api/v1/auth/verifyEmail",
-  "/api/v1/auth/forgotPassword",
-  "/api/v1/auth/resetPassword"
+  "/api/auth/login",
+  "/api/auth/register",
+  "/api/auth/sentVerifyCode",
+  "/api/auth/verifyEmail",
+  "/api/auth/forgotPassword",
+  "/api/auth/resetPassword"
 ];
 
 export {
