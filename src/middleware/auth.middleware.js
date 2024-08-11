@@ -7,10 +7,7 @@ export const requreAuthentication = asynHandler(async (req, res, next) => {
   const userToken = new AuthToken();
   if (excludedAuthPaths.includes(req.path)) return next();
   const token = req.cookies?.authToken;
-  console.log("Request: ", req);
-  console.log("REq cookies", req.cookies);
   console.log("Autho token", req.cookies.authToken);
-  console.log("Signed token", req.signedCookies?.authToken);
   req.user = null;
   if (!token)
     throw new ApiError(
