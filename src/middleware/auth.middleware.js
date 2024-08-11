@@ -6,8 +6,7 @@ import { excludedAuthPaths } from "../constants.js";
 export const requreAuthentication = asynHandler(async (req, res, next) => {
   const userToken = new AuthToken();
   if (excludedAuthPaths.includes(req.path)) return next();
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjYzZWNmNGY1ZThhMzM3OTQ4ZjIwYyIsInVzZXJOYW1lIjoibXVzdGFrMDA5MzIiLCJlbWFpbCI6Im1zazU4MDQ5QGdtYWlsLmNvbSIsImlzVmVyaWZpZWQiOnRydWUsImlhdCI6MTcyMzM1MTg3MCwiZXhwIjoxNzIzOTU2NjcwfQ.8dw7AV4JtGjGeDP5lNQ-k1gpBvTxZLa9IPS3oeCIA5I";
+  const token = req.cookies?.authToken;
   req.user = null;
   if (!token)
     throw new ApiError(
