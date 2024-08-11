@@ -5,7 +5,10 @@ import { excludedAuthPaths } from "../constants.js";
 
 export const requreAuthentication = asynHandler(async (req, res, next) => {
   const userToken = new AuthToken();
-  if (excludedAuthPaths.includes(req.path)) return next();
+  if (excludedAuthPaths.includes(req.path)) {
+    console.log("Exclude paths");
+    return next();
+  }
   const token = req.cookies?.authToken;
   console.log("Autho token", req.cookies.authToken);
   req.user = null;
