@@ -5,7 +5,7 @@ const DB_NAME = "MemoMe";
 const DATA_LIMIT = "16kb";
 const API_URL = "/api";
 const excludedAuthPaths = [
-  "/api/auth/login",
+  "https://memome-cli.onrender.com/api/auth/login",
   "/api/auth/register",
   "/api/auth/sentVerifyCode",
   "/api/auth/verifyEmail",
