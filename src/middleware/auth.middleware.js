@@ -10,7 +10,11 @@ export const requreAuthentication = asynHandler(async (req, res, next) => {
     console.log("Exclude paths");
     return next();
   }
-  const token = req.cookies?.authToken;
+  const authHeader = req.headers["authorization"];
+  if (!authHeader) {
+    throw new ApiError(401, "Authorization header missing");
+  }
+  const token = authHeader.split(" ")[1];
   console.log("Autho token", req.cookies.authToken);
   req.user = null;
   if (!token)
