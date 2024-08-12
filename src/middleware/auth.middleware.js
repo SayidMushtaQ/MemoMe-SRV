@@ -11,7 +11,8 @@ export const requreAuthentication = asynHandler(async (req, res, next) => {
     return next();
   }
 
-  const token = req.cookies?.authToken;
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
   console.log("Autho token", token);
   req.user = null;
   if (!token)
