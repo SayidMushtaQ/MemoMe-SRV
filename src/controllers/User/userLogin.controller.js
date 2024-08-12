@@ -39,7 +39,8 @@ export const userLogin = asynHandler(async (req, res) => {
       secure: true,
       httpOnly: true,
       sameSite: "None",
-      maxAge: 7 * 24 * 60 * 60 * 1000
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: "/"
     })
     .json(
       new ApiResponse(200, { ...userInfo, redirectURI: "/user" }, "Login successful")
