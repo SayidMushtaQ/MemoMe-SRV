@@ -5,6 +5,7 @@ const DB_NAME = "MemoMe";
 const DATA_LIMIT = "16kb";
 const API_URL = "/api/v1";
 const excludedAuthPaths = [
+  "/",
   "/api/v1/auth/login",
   "/api/v1/auth/register",
   "/api/v1/auth/sentVerifyCode",
