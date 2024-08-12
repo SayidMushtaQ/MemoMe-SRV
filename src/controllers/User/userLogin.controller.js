@@ -35,13 +35,6 @@ export const userLogin = asynHandler(async (req, res) => {
   const token = userToken.setUser(userInfo);
   return res
     .status(200)
-    .cookie("authToken", token, {
-      secure: true,
-      httpOnly: true,
-      sameSite: "None",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      path: "/"
-    })
     .json(
       new ApiResponse(
         200,
