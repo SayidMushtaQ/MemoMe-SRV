@@ -5,7 +5,8 @@ export const userProfile = asynHandler(async (req, res) => {
     id: req.user.id,
     userName: req.user.userName,
     email: req.user.email,
-    isVerified: req.user.isVerified
+    isVerified: req.user.isVerified,
+    token: req.user.token
   };
   res.status(200).json(new ApiResponse(200, { user }, "Data fetched sucessfully"));
 });

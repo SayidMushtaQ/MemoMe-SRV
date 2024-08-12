@@ -25,7 +25,7 @@ export const userLogin = asynHandler(async (req, res) => {
   if (!isPasswordCorrect) {
     throw new ApiError(401, "Wrong credentials", ["Unauthorized"]);
   }
-  const userInfo = {
+  let userInfo = {
     id: user.id,
     userName: user.userName,
     email: user.email,
@@ -33,6 +33,7 @@ export const userLogin = asynHandler(async (req, res) => {
   };
 
   const token = userToken.setUser(userInfo);
+  userInfo = { ...userInfo, token };
   return res
     .status(200)
     .json(
