@@ -5,15 +5,11 @@ import { excludedAuthPaths } from "../constants.js";
 
 export const requreAuthentication = asynHandler(async (req, res, next) => {
   const userToken = new AuthToken();
-  console.log(req.path);
-  if (excludedAuthPaths.includes(req.path)) {
-    console.log("Exclude paths");
-    return next();
-  }
+  if (excludedAuthPaths.includes(req.path)) return next();
 
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  console.log("Autho token", token);
+
   req.user = null;
   if (!token)
     throw new ApiError(
