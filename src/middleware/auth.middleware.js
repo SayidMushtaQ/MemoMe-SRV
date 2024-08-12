@@ -5,6 +5,7 @@ import { excludedAuthPaths } from "../constants.js";
 
 export const requreAuthentication = asynHandler(async (req, res, next) => {
   const userToken = new AuthToken();
+  console.log(req.path);
   if (excludedAuthPaths.includes(req.path)) return next();
 
   const authHeader = req.headers["authorization"];
