@@ -43,6 +43,10 @@ export const userLogin = asynHandler(async (req, res) => {
       path: "/"
     })
     .json(
-      new ApiResponse(200, { ...userInfo, redirectURI: "/user" }, "Login successful")
+      new ApiResponse(
+        200,
+        { ...userInfo, token, redirectURI: "/user" },
+        "Login successful"
+      )
     );
 });
