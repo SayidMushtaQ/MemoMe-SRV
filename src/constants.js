@@ -15,6 +15,7 @@ const excludedAuthPaths = [
 ];
 const RESET_PARAMS_REGEX =
   /^\/api\/v1\/auth\/reset-password\/[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
+const FRONT_END_URI = "https://memome-cli.onrender.com";
 
 export {
   EMAIL_REGEX,
@@ -23,5 +24,6 @@ export {
   DATA_LIMIT,
   API_URL,
   excludedAuthPaths,
-  RESET_PARAMS_REGEX
+  RESET_PARAMS_REGEX,
+  FRONT_END_URI
 };

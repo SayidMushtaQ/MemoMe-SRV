@@ -3,6 +3,7 @@ import { User } from "../../modules/user.module.js";
 import { asynHandler } from "../../util/asynHandler.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 import { sendEmailVerification } from "../../util/sendEmailVerification.js";
+import { FRONT_END_URI } from "../../constants.js";
 import jwt from "jsonwebtoken";
 export const resetPassword = asynHandler(async (req, res) => {
   const { userIdentifier } = req.body;
@@ -22,9 +23,8 @@ export const resetPassword = asynHandler(async (req, res) => {
   const resetToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
     expiresIn: "10m"
   });
-  console.log({ resetToken });
 
-  const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+  const resetUrl = `${FRONT_END_URI}/reset-password/${resetToken}`;
   console.log(resetUrl);
   const resEmail = await sendEmailVerification(user.email, user.userName, resetUrl);
   if (!resEmail.success) {

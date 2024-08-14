@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 export const setNewPassword = asynHandler(async (req, res) => {
   const { token } = req.params;
   const { newPassword } = req.body;
-  console.log(token);
   if (newPassword === "") {
     throw new ApiError(400, "New password is required", [
       "Please fill up all necessary fields"
