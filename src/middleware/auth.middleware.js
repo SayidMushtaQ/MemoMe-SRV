@@ -7,7 +7,6 @@ export const requreAuthentication = asynHandler(async (req, res, next) => {
   const userToken = new AuthToken();
   if (excludedAuthPaths.includes(req.path)) return next();
   if (RESET_PARAMS_REGEX.test(req.path)) return next();
-  console.log(RESET_PARAMS_REGEX.test(req.path));
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
