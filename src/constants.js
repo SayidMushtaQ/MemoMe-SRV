@@ -11,8 +11,10 @@ const excludedAuthPaths = [
   "/api/v1/auth/sentVerifyCode",
   "/api/v1/auth/verifyEmail",
   "/api/v1/auth/reset-password",
-  "/api/v1/auth/resetPassword"
+  "/api/v1/auth/reset-password/:token"
 ];
+const RESET_PARAMS_REGEX =
+  /^\/api\/v1\/auth\/reset-password\/[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
 
 export {
   EMAIL_REGEX,
@@ -20,5 +22,6 @@ export {
   DB_NAME,
   DATA_LIMIT,
   API_URL,
-  excludedAuthPaths
+  excludedAuthPaths,
+  RESET_PARAMS_REGEX
 };

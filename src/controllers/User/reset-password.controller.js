@@ -19,13 +19,13 @@ export const resetPassword = asynHandler(async (req, res) => {
   if (!user.isVerified) {
     throw new ApiError(403, "User not verified");
   }
-  const resetToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+  const resetToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
     expiresIn: "10m"
   });
   console.log({ resetToken });
 
   const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
-
+  console.log(resetUrl);
   const resEmail = await sendEmailVerification(user.email, user.userName, resetUrl);
   if (!resEmail.success) {
     throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);

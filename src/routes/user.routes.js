@@ -15,6 +15,6 @@ route.route("/user").get(userProfile);
 route.route("/sentVerifyCode").post(userVerificaiton);
 route.route("/verifyEmail").post(userVerifyOTP);
 route.route("/reset-password").post(resetPassword);
-route.route("/reset-password/:token").post(setNewPassword);
+route.route("/reset-password/:token").put(setNewPassword);
 
 export default route;

@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 export const setNewPassword = asynHandler(async (req, res) => {
   const { token } = req.params;
   const { newPassword } = req.body;
+  console.log(token);
   if (newPassword === "") {
     throw new ApiError(400, "New password is required", [
       "Please fill up all necessary fields"
@@ -19,8 +20,9 @@ export const setNewPassword = asynHandler(async (req, res) => {
   }
   const decode = jwt.verify(token, process.env.JWT_SECRET);
 
-  const { user } = await User.findUserByEmailOrUserName(decode.id);
-
+  console.log(decode);
+  const { user } = await User.findUserByEmailOrUserName(decode.email);
+  console.log(user);
   if (!user) {
     throw new ApiError(404, "User does not exist", ["Not Found"]);
   }
