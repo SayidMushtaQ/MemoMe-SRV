@@ -3,7 +3,7 @@ import { User } from "../../modules/user.module.js";
 import { asynHandler } from "../../util/asynHandler.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 import { sendEmailVerification } from "../../util/sendEmailVerification.js";
-import crypto from "crypto-js";
+import crypto from "crypto";
 export const resetPassword = asynHandler(async (req, res) => {
   const { userIdentifier } = req.body;
   if (!userIdentifier) {
