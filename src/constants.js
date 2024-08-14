@@ -15,7 +15,7 @@ const excludedAuthPaths = [
 ];
 const RESET_PARAMS_REGEX =
   /^\/api\/v1\/auth\/reset-password\/[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
-const FRONT_END_URI = "https://memome-cli.onrender.com";
+const FRONT_END_URI = "http://localhost:5173";
 
 export {
   EMAIL_REGEX,

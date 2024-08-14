@@ -19,9 +19,8 @@ export const setNewPassword = asynHandler(async (req, res) => {
   }
   const decode = jwt.verify(token, process.env.JWT_SECRET);
 
-  console.log(decode);
   const { user } = await User.findUserByEmailOrUserName(decode.email);
-  console.log(user);
+
   if (!user) {
     throw new ApiError(404, "User does not exist", ["Not Found"]);
   }
