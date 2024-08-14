@@ -3,7 +3,7 @@ import { User } from "../../modules/user.module.js";
 import { asynHandler } from "../../util/asynHandler.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 import { sendEmailVerification } from "../../util/sendEmailVerification.js";
-import crypto from "crypto";
+import jwt from "jsonwebtoken";
 export const resetPassword = asynHandler(async (req, res) => {
   const { userIdentifier } = req.body;
   if (!userIdentifier) {
@@ -19,17 +19,15 @@ export const resetPassword = asynHandler(async (req, res) => {
   if (!user.isVerified) {
     throw new ApiError(403, "User not verified");
   }
-  const resetToken = crypto.randomBytes(32).toString("hex");
-  const resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-  const resetPasswordExpire = Date.now() + 10 * 60 * 1000;
-  console.log({ resetToken }, { resetPasswordToken }, { resetPasswordExpire });
-  user.resetPasswordToken = resetPasswordToken;
-  user.resetPasswordExpire = resetPasswordExpire;
-  await user.save();
+  const resetToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: "10m"
+  });
+  console.log({ resetToken });
+
   const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
 
-  const sentEmail = await sendEmailVerification(user.email, user.userName, resetUrl);
-  if (!sentEmail.success) {
+  const resEmail = await sendEmailVerification(user.email, user.userName, resetUrl);
+  if (!resEmail.success) {
     throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);
   }
 
@@ -38,8 +36,8 @@ export const resetPassword = asynHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,
-        { message: sentEmail.message },
-        "Fortgot password OTP has been sent to your email."
+        { message: resEmail.message },
+        "Fortgot password URI has been sent to your email."
       )
     );
 });
