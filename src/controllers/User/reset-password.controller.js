@@ -24,7 +24,7 @@ export const resetPassword = asynHandler(async (req, res) => {
     expiresIn: "10m"
   });
 
-  const resetUrl = `${FRONT_END_URI}/reset-password/${resetToken}`;
+  const resetUrl = `${process.env.FRONT_END_URI}/reset-password/${resetToken}`;
   const resEmail = await sendEmailVerification(user.email, user.userName, resetUrl);
   if (!resEmail.success) {
     throw new ApiError(500, "Something went wrong..!!", ["Internal Server Error"]);
