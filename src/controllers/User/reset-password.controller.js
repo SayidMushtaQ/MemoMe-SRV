@@ -3,7 +3,6 @@ import { User } from "../../modules/user.module.js";
 import { asynHandler } from "../../util/asynHandler.js";
 import { ApiResponse } from "../../util/apiResponse.js";
 import { sendEmailVerification } from "../../util/sendEmailVerification.js";
-import { FRONT_END_URI } from "../../constants.js";
 import jwt from "jsonwebtoken";
 export const resetPassword = asynHandler(async (req, res) => {
   const { userIdentifier } = req.body;
